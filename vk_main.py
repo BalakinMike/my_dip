@@ -196,7 +196,7 @@ class VKBot:
     def find_persons(self, user_id, offset):
         self.write_msg(user_id, self.found_person_info(offset))
         self.person_id(offset)
-        insert_data_units_seen(self.person_id(offset)) # offset has been delited as nonfunctional parameter
+        # insert_data_units_seen(self.person_id(offset)) # offset has been delited as nonfunctional parameter
         self.photo_id(self.person_id(offset))
         self.send_1(user_id, 'Лучшее фото', offset)
         if self.photo_2(self.person_id(offset)) != None:
@@ -204,18 +204,19 @@ class VKBot:
             self.send_3(user_id, 'Третья фотка', offset)
         else:
             self.write_msg(user_id, f'Больше фотографий нет')
+        insert_data_units_seen(self.person_id(offset)) # offset has been delited as nonfunctional parameter
 
     def found_person_info(self, offset):
-        tuple_person = select(offset)
+        person_info = select(offset)
         list_person = []
-        for i in tuple_person:
+        for i in person_info:
             list_person.append(i)
         return f'{list_person[0]} {list_person[1]}, ссылка - {list_person[3]}'
 
     def person_id(self, offset):
-        tuple_person = select(offset)
+        person_info = select(offset)
         list_person = []
-        for i in tuple_person:
+        for i in person_info:
             list_person.append(i)
         return str(list_person[2])
 
@@ -225,8 +226,8 @@ for event in bot.longpoll.listen():
     if event.type == VkEventType.MESSAGE_NEW and event.to_me:
         user_id = str(event.user_id)
         request = event.text.lower()
-        print(user_id)
         print(request)
+        print(offset)
         if request == "начать поиск":
             name = bot.name(user_id)
             bot.write_msg(user_id, f"Привет, {name}")
@@ -239,11 +240,10 @@ for event in bot.longpoll.listen():
             
             offset += 1
             bot.find_persons(user_id, offset)
-            # break
-        
+                    
         elif request == "пока":
             bot.write_msg(user_id, f"Пока, {name}")
+            break
         
         else:
-            
             bot.write_msg(user_id, "Не понял вашего ответа...")
