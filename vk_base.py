@@ -49,8 +49,7 @@ def insert_data_units_seen(vk_id, offset):
     with conn.cursor() as cursor:
         cursor.execute(
             f"""INSERT INTO units_seen (vk_id) 
-            VALUES ('{vk_id}')
-            OFFSET '{offset}';"""
+            VALUES ('{vk_id}');"""
         )
 
 
