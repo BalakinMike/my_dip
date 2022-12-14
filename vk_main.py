@@ -196,7 +196,7 @@ class VKBot:
     def find_persons(self, user_id, offset):
         self.write_msg(user_id, self.found_person_info(offset))
         self.person_id(offset)
-        insert_data_units_seen(self.person_id(offset), offset) 
+        insert_data_units_seen(self.person_id(offset)) # offset has been delited as nonfunctional parameter
         self.photo_id(self.person_id(offset))
         self.send_1(user_id, 'Лучшее фото', offset)
         if self.photo_2(self.person_id(offset)) != None:

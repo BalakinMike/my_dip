@@ -44,7 +44,7 @@ def insert_data_units_serch(name, surname, vk_id, vk_link):
         )
 
 
-def insert_data_units_seen(vk_id, offset):
+def insert_data_units_seen(vk_id): # offset has been delited as nonfunctional parameter
     
     with conn.cursor() as cursor:
         cursor.execute(
